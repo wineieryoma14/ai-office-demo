@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>マルワ製作所 AIオフィス</title>
+<style>
+  :root{ --blue:#2563EB; --orange:#F97316; --ink:#1f2937; --muted:#6b7280; --bg:#e9edf4; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.6}
+  .wrap{max-width:1100px;margin:0 auto;padding:18px 14px 50px}
+
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand .logo{width:38px;height:38px;border-radius:10px;background:var(--blue);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
+  .brand h1{font-size:18px;font-weight:800}.brand h1 span{color:var(--muted);font-weight:700}
+  .brand .tag{font-size:12px;color:var(--muted);font-weight:600}
+  .demo-badge{font-size:11px;font-weight:700;color:#fff;background:var(--orange);padding:5px 10px;border-radius:999px}
+
+  .catch{text-align:center;font-size:clamp(16px,3.1vw,21px);font-weight:800;line-height:1.5;margin:12px 8px 2px}
+  .catch b{color:var(--blue)}
+  .sub-catch{text-align:center;color:var(--muted);font-size:13px;margin-bottom:14px}
+
+  /* ===== オフィス俯瞰マップ ===== */
+  .stage{width:100%;position:relative;overflow:hidden;border-radius:22px;
+    border:1px solid #cfd8e8;box-shadow:0 20px 44px rgba(37,99,235,.12)}
+  .map{width:1000px;height:640px;position:absolute;top:0;left:0;transform-origin:top left;
+    background-color:#ece6da;
+    background-image:linear-gradient(rgba(0,0,0,.035) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(0,0,0,.035) 1px,transparent 1px);
+    background-size:50px 50px}
+
+  /* 直接配置する要素だけ絶対配置 */
+  .wall,.sign,.clock,.plant,.block,.room,.ceo-room,.shelf,.miniava,.pod{position:absolute}
+
+  .wall{left:0;top:0;width:1000px;height:46px;background:linear-gradient(180deg,#e7edfa,#dde6f5);border-bottom:1px solid #cdd7ea}
+  .sign{left:50%;top:7px;transform:translateX(-50%);background:#fff;border:1px solid #dbe3f1;border-radius:10px;
+    padding:5px 22px;text-align:center;box-shadow:0 3px 9px rgba(0,0,0,.07)}
+  .sign b{font-size:16px;font-weight:800}.sign small{display:block;font-size:9px;color:#9aa3b2;font-weight:700;letter-spacing:2px}
+  .clock{left:946px;top:9px;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid #cdd6e6}
+  .clock i{position:absolute;left:50%;top:50%;background:#64748b;border-radius:2px;transform-origin:bottom center}
+  .clock i.hh{width:2px;height:8px;transform:translate(-50%,-100%) rotate(45deg)}
+  .clock i.mm{width:2px;height:11px;transform:translate(-50%,-100%) rotate(-80deg)}
+
+  .plant{font-size:30px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.12))}
+
+  /* 既存社員の島デスク（装飾） */
+  .block{display:grid;grid-template-columns:repeat(2,66px);gap:10px}
+  .ud{position:relative;width:66px;height:48px}
+  .ud .top{position:absolute;left:0;right:0;top:0;height:34px;background:#dee4f0;border-radius:6px;box-shadow:0 3px 6px rgba(0,0,0,.08)}
+  .ud .mon{position:absolute;top:5px;left:50%;transform:translateX(-50%);width:28px;height:13px;background:#3b4a63;border-radius:3px}
+  .ud .chair{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:26px;height:15px;background:#c4cde0;border-radius:9px 9px 11px 11px}
+  .miniava{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--blue);
+    display:flex;align-items:center;justify-content:center;font-size:11px;z-index:5}
+
+  /* 右の部屋（装飾） */
+  .room{background:rgba(255,255,255,.45);border:1.5px dashed #c2ccdd;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;color:#8a93a5;font-weight:800;font-size:14px;letter-spacing:2px}
+
+  /* 下の棚（装飾） */
+  .shelf{height:30px;background:linear-gradient(180deg,#d6a574,#c79256);border-radius:6px;
+    display:flex;align-items:center;gap:14px;padding:0 14px;font-size:16px;color:#fff;box-shadow:0 6px 12px rgba(0,0,0,.12)}
+
+  /* 社長室（指示を出す） */
+  .ceo-room{background:rgba(37,99,235,.06);border:1.5px solid #b9c8ee;border-radius:12px}
+  .ceo-room>*{position:absolute}
+  .rm-label{left:16px;top:13px;font-size:14px;font-weight:800;color:var(--blue)}
+  .bava{left:220px;top:11px;width:44px;height:44px;border-radius:50%;background:#fff;border:3px solid var(--orange);
+    display:flex;align-items:center;justify-content:center;font-size:23px;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+  .btag{left:214px;top:57px;font-size:10px;font-weight:800;color:#92400e;background:#fff;border:1px solid #fcd9b6;
+    border-radius:999px;padding:2px 9px}
+  .cmd-head{left:16px;top:60px;font-size:12px;font-weight:700;color:#475569}
+  .cmd{left:16px;width:258px;height:40px;display:flex;align-items:center;gap:9px;padding-left:14px;text-decoration:none;
+    background:#fff;border:1px solid #d8e0f0;border-radius:10px;font-size:13.5px;font-weight:700;color:var(--ink);
+    box-shadow:0 2px 6px rgba(0,0,0,.05);transition:border-color .12s,background .12s}
+  .cmd:hover{border-color:var(--blue);background:#f5f8ff}
+  .cmd .ar{margin-left:auto;margin-right:12px;color:var(--blue);font-weight:800}
+
+  /* ★ 3つのAI社員ポッド（クリック本体） */
+  .pod{width:196px;height:250px;text-decoration:none;text-align:center;cursor:pointer}
+  .pod>*{position:absolute}
+  .pod .rug{left:50%;top:34px;transform:translateX(-50%);width:184px;height:150px;border-radius:50%;
+    background:radial-gradient(closest-side,#f4e7d2,rgba(244,231,210,0));transition:background .15s}
+  .pod .label{left:50%;top:0;transform:translateX(-50%);background:var(--blue);color:#fff;font-weight:800;font-size:13px;
+    padding:5px 15px;border-radius:999px;white-space:nowrap;z-index:4;box-shadow:0 4px 10px rgba(37,99,235,.35)}
+  .pod .table{left:50%;top:78px;transform:translateX(-50%);width:96px;height:96px;border-radius:50%;background:#e7ebf3;
+    border:3px solid #fff;box-shadow:0 6px 14px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:30px}
+  .pod .ava{left:50%;top:60px;transform:translateX(-50%);width:50px;height:50px;border-radius:50%;background:#fff;
+    border:3px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:25px;z-index:3;box-shadow:0 4px 10px rgba(0,0,0,.15)}
+  .pod .cta{left:50%;top:190px;transform:translateX(-50%);background:var(--orange);color:#fff;font-weight:800;font-size:14px;
+    padding:11px 20px;border-radius:12px;white-space:nowrap;z-index:4;box-shadow:0 6px 14px rgba(249,115,22,.4);transition:transform .12s}
+  .pod .task{left:50%;top:234px;transform:translateX(-50%);width:188px;font-size:11px;color:#7a8499;font-weight:600}
+  .pod:hover .rug{background:radial-gradient(closest-side,#ffe7bf,rgba(255,231,191,0))}
+  .pod:hover .cta{transform:translateX(-50%) translateY(-2px)}
+
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:18px;line-height:1.7}
+  footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="brand">
+      <div class="logo">AI</div>
+      <div><h1>マルワ製作所 <span>AIオフィス</span></h1><div class="tag">株式会社Lib</div></div>
+    </div>
+    <span class="demo-badge">デモ</span>
+  </header>
+
+  <p class="catch">御社の業務を、<b>AI社員3人</b>が担当します。</p>
+  <p class="sub-catch">AI社員のデスクをタップ、または社長室から指示を出してください</p>
+
+  <div class="stage" id="stage">
+    <div class="map" id="map">
+
+      <!-- 壁・看板・時計 -->
+      <div class="wall"></div>
+      <div class="sign"><b>マルワ製作所</b><small>東大阪 ｜ 精密切削加工</small></div>
+      <div class="clock"><i class="hh"></i><i class="mm"></i></div>
+
+      <!-- 観葉植物 -->
+      <div class="plant" style="left:14px;top:82px">🪴</div>
+      <div class="plant" style="left:14px;top:300px">🌿</div>
+      <div class="plant" style="left:14px;top:520px">🪴</div>
+
+      <!-- 既存社員の島デスク（装飾） -->
+      <div class="block" style="left:96px;top:72px">
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+      </div>
+      <div class="block" style="left:330px;top:72px">
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
+      </div>
+      <div class="miniava" style="left:96px;top:96px">🧑</div>
+      <div class="miniava" style="left:216px;top:150px">👩</div>
+      <div class="miniava" style="left:424px;top:96px">🧑</div>
+
+      <!-- 社長室（指示を出す） -->
+      <div class="ceo-room" style="left:690px;top:56px;width:290px;height:250px">
+        <div class="rm-label">社長室</div>
+        <div class="bava">🧑‍💼</div>
+        <div class="btag">社長</div>
+        <div class="cmd-head">AI社員に指示を出す</div>
+        <a class="cmd" style="top:90px" data-key="fax">📥 受注を入力する <span class="ar">▶</span></a>
+        <a class="cmd" style="top:136px" data-key="quote">📄 見積もりを作る <span class="ar">▶</span></a>
+        <a class="cmd" style="top:182px" data-key="mail">✉️ メールを作る <span class="ar">▶</span></a>
+      </div>
+
+      <!-- 右下：部屋（装飾） -->
+      <div class="room" style="left:742px;top:326px;width:238px;height:98px">会議室</div>
+      <div class="room" style="left:742px;top:436px;width:238px;height:98px">応接室</div>
+
+      <!-- ★ 3つのAI社員ポッド（クリック本体） -->
+      <a class="pod" style="left:60px;top:330px" data-key="fax" target="_blank" rel="noopener">
+        <span class="rug"></span><span class="label">FAX受注AI社員</span>
+        <span class="table">📊</span><span class="ava">🧑‍💼</span>
+        <span class="cta">使ってみる →</span><span class="task">FAX・発注書を自動入力</span>
+      </a>
+      <a class="pod" style="left:272px;top:330px" data-key="quote" target="_blank" rel="noopener">
+        <span class="rug"></span><span class="label">見積作成AI社員</span>
+        <span class="table">📄</span><span class="ava">🧑‍💼</span>
+        <span class="cta">使ってみる →</span><span class="task">見積書を自動作成</span>
+      </a>
+      <a class="pod" style="left:484px;top:330px" data-key="mail" target="_blank" rel="noopener">
+        <span class="rug"></span><span class="label">メール作成AI社員</span>
+        <span class="table">✉️</span><span class="ava">🧑‍💼</span>
+        <span class="cta">使ってみる →</span><span class="task">取引先メールを自動作成</span>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    これは<b>デモ用の架空の会社</b>です。会社名・取扱品・業務を入れ替えれば、<b>御社のAIオフィス</b>になります。<br>
+    提供：株式会社Lib
+  </footer>
+
+</div>
+
+<script>
+  const LINKS = {
+    fax:   "https://wineieryoma14.github.io/fax-order-demo/",
+    quote: "https://wineieryoma14.github.io/quote-demo/",
+    mail:  "https://mail-migiude.vercel.app/app/f2f42d3c-8f61-46bc-b59f-45edf479cfad"
+  };
+  document.querySelectorAll("a[data-key]").forEach(a=>{
+    a.href = LINKS[a.dataset.key] || "#";
+    if(a.classList.contains("cmd")){ a.target="_blank"; a.rel="noopener"; }
+  });
+
+  function fit(){
+    const stage=document.getElementById('stage'); const map=document.getElementById('map');
+    const s=stage.clientWidth/1000; map.style.transform='scale('+s+')'; stage.style.height=(640*s)+'px';
+  }
+  window.addEventListener('resize',fit); fit();
+</script>
+</body>
+</html>
