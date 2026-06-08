@@ -39,6 +39,9 @@
   .sign{left:50%;top:7px;transform:translateX(-50%);background:#fff;border:1px solid #dbe3f1;border-radius:10px;
     padding:5px 22px;text-align:center;box-shadow:0 3px 9px rgba(0,0,0,.07)}
   .sign b{font-size:16px;font-weight:800}.sign small{display:block;font-size:9px;color:#9aa3b2;font-weight:700;letter-spacing:2px}
+  a.sign{text-decoration:none;color:inherit;cursor:pointer;transition:box-shadow .15s,transform .15s}
+  a.sign:hover{box-shadow:0 6px 16px rgba(36,85,113,.18);transform:translateX(-50%) translateY(-1px)}
+  .sign-cta{display:block;margin-top:3px;font-size:9px;font-weight:800;letter-spacing:1px;color:#245571}
   .clock{left:946px;top:9px;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid #cdd6e6}
   .clock i{position:absolute;left:50%;top:50%;background:#64748b;border-radius:2px;transform-origin:bottom center}
   .clock i.hh{width:2px;height:8px;transform:translate(-50%,-100%) rotate(45deg)}
@@ -118,7 +121,7 @@
 
       <!-- 壁・看板・時計 -->
       <div class="wall"></div>
-      <div class="sign"><b>マルワ製作所</b><small>東大阪 ｜ 精密切削加工</small></div>
+      <a class="sign" data-key="hp" target="_blank" rel="noopener"><b>マルワ製作所</b><small>東大阪 ｜ 精密切削加工</small><span class="sign-cta">🌐 会社サイトを見る ▶</span></a>
       <div class="clock"><i class="hh"></i><i class="mm"></i></div>
 
       <!-- 観葉植物 -->
@@ -193,7 +196,8 @@
   const LINKS = {
     fax:   "https://wineieryoma14.github.io/fax-order-demo/",
     quote: "https://wineieryoma14.github.io/quote-demo/",
-    mail:  "https://mail-migiude.vercel.app/app/f2f42d3c-8f61-46bc-b59f-45edf479cfad"
+    mail:  "https://mail-migiude.vercel.app/app/f2f42d3c-8f61-46bc-b59f-45edf479cfad",
+    hp:    "https://wineieryoma14.github.io/company-hp-demo/"
   };
   document.querySelectorAll("a[data-key]").forEach(a=>{
     a.href = LINKS[a.dataset.key] || "#";
