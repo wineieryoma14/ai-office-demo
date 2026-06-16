@@ -82,9 +82,9 @@
   .cmd .ar{margin-left:auto;margin-right:12px;color:var(--blue);font-weight:800}
 
   /* ★ 3つのAI社員ポッド（クリック本体） */
-  .pod{width:196px;height:250px;text-decoration:none;text-align:center;cursor:pointer}
+  .pod{width:164px;height:250px;text-decoration:none;text-align:center;cursor:pointer}
   .pod>*{position:absolute}
-  .pod .rug{left:50%;top:34px;transform:translateX(-50%);width:184px;height:150px;border-radius:50%;
+  .pod .rug{left:50%;top:34px;transform:translateX(-50%);width:152px;height:150px;border-radius:50%;
     background:radial-gradient(closest-side,#f4e7d2,rgba(244,231,210,0));transition:background .15s}
   .pod .label{left:50%;top:0;transform:translateX(-50%);background:var(--blue);color:#fff;font-weight:800;font-size:13px;
     padding:5px 15px;border-radius:999px;white-space:nowrap;z-index:4;box-shadow:0 4px 10px rgba(37,99,235,.35)}
@@ -94,7 +94,7 @@
     border:3px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:25px;z-index:3;box-shadow:0 4px 10px rgba(0,0,0,.15)}
   .pod .cta{left:50%;top:190px;transform:translateX(-50%);background:var(--orange);color:#fff;font-weight:800;font-size:14px;
     padding:11px 20px;border-radius:12px;white-space:nowrap;z-index:4;box-shadow:0 6px 14px rgba(249,115,22,.4);transition:transform .12s}
-  .pod .task{left:50%;top:234px;transform:translateX(-50%);width:188px;font-size:11px;color:#7a8499;font-weight:600}
+  .pod .task{left:50%;top:234px;transform:translateX(-50%);width:158px;font-size:11px;color:#7a8499;font-weight:600}
   .pod:hover .rug{background:radial-gradient(closest-side,#ffe7bf,rgba(255,231,191,0))}
   .pod:hover .cta{transform:translateX(-50%) translateY(-2px)}
 
@@ -113,7 +113,7 @@
     <span class="demo-badge">デモ</span>
   </header>
 
-  <p class="catch">御社の業務を、<b>AI社員3人</b>が担当します。</p>
+  <p class="catch">御社の業務を、<b>AI社員4人</b>が担当します。</p>
   <p class="sub-catch">AI社員のデスクをタップ、または社長室から指示を出してください</p>
 
   <div class="stage" id="stage">
@@ -151,35 +151,41 @@
       <div class="miniava" style="left:424px;top:96px">🧑</div>
 
       <!-- 社長室（指示を出す） -->
-      <div class="ceo-room" style="left:690px;top:56px;width:290px;height:250px">
+      <div class="ceo-room" style="left:690px;top:56px;width:290px;height:266px">
         <div class="rm-label">社長室</div>
         <div class="bava">🧑‍💼</div>
         <div class="btag">社長</div>
         <div class="cmd-head">AI社員に指示を出す</div>
-        <a class="cmd" style="top:90px" data-key="fax">📥 受注を入力する <span class="ar">▶</span></a>
-        <a class="cmd" style="top:136px" data-key="quote">📄 見積もりを作る <span class="ar">▶</span></a>
-        <a class="cmd" style="top:182px" data-key="mail">✉️ メールを作る <span class="ar">▶</span></a>
+        <a class="cmd" style="top:84px" data-key="fax">📥 受注を入力する <span class="ar">▶</span></a>
+        <a class="cmd" style="top:128px" data-key="quote">📄 見積もりを作る <span class="ar">▶</span></a>
+        <a class="cmd" style="top:172px" data-key="mail">✉️ メールを作る <span class="ar">▶</span></a>
+        <a class="cmd" style="top:216px" data-key="catalog">📘 カタログを作る <span class="ar">▶</span></a>
       </div>
 
       <!-- 右下：部屋（装飾） -->
       <div class="room" style="left:742px;top:326px;width:238px;height:98px">会議室</div>
       <div class="room" style="left:742px;top:436px;width:238px;height:98px">応接室</div>
 
-      <!-- ★ 3つのAI社員ポッド（クリック本体） -->
-      <a class="pod" style="left:60px;top:330px" data-key="fax" target="_blank" rel="noopener">
+      <!-- ★ 4つのAI社員ポッド（クリック本体） -->
+      <a class="pod" style="left:28px;top:330px" data-key="fax" target="_blank" rel="noopener">
         <span class="rug"></span><span class="label">FAX受注AI社員</span>
         <span class="table">📊</span><span class="ava">🧑‍💼</span>
         <span class="cta">使ってみる →</span><span class="task">FAX・発注書を自動入力</span>
       </a>
-      <a class="pod" style="left:272px;top:330px" data-key="quote" target="_blank" rel="noopener">
+      <a class="pod" style="left:196px;top:330px" data-key="quote" target="_blank" rel="noopener">
         <span class="rug"></span><span class="label">見積作成AI社員</span>
         <span class="table">📄</span><span class="ava">🧑‍💼</span>
         <span class="cta">使ってみる →</span><span class="task">見積書を自動作成</span>
       </a>
-      <a class="pod" style="left:484px;top:330px" data-key="mail" target="_blank" rel="noopener">
+      <a class="pod" style="left:364px;top:330px" data-key="mail" target="_blank" rel="noopener">
         <span class="rug"></span><span class="label">メール作成AI社員</span>
         <span class="table">✉️</span><span class="ava">🧑‍💼</span>
         <span class="cta">使ってみる →</span><span class="task">取引先メールを自動作成</span>
+      </a>
+      <a class="pod" style="left:532px;top:330px" data-key="catalog" target="_blank" rel="noopener">
+        <span class="rug"></span><span class="label">カタログ作成AI社員</span>
+        <span class="table">📘</span><span class="ava">🧑‍💼</span>
+        <span class="cta">使ってみる →</span><span class="task">商品カタログを自動作成</span>
       </a>
 
     </div>
@@ -194,10 +200,11 @@
 
 <script>
   const LINKS = {
-    fax:   "https://wineieryoma14.github.io/fax-order-demo/",
-    quote: "https://wineieryoma14.github.io/quote-demo/",
-    mail:  "https://mail-migiude.vercel.app/app/f2f42d3c-8f61-46bc-b59f-45edf479cfad",
-    hp:    "https://wineieryoma14.github.io/company-hp-demo/"
+    fax:    "https://wineieryoma14.github.io/fax-order-demo/",
+    quote:  "https://wineieryoma14.github.io/quote-demo/",
+    mail:   "https://mail-migiude.vercel.app/app/f2f42d3c-8f61-46bc-b59f-45edf479cfad",
+    catalog:"https://wineieryoma14.github.io/catalog-demo/",
+    hp:     "https://wineieryoma14.github.io/company-hp-demo/"
   };
   document.querySelectorAll("a[data-key]").forEach(a=>{
     a.href = LINKS[a.dataset.key] || "#";
