@@ -5,98 +5,124 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>マルワ製作所 AIオフィス</title>
 <style>
-  :root{ --blue:#2563EB; --orange:#F97316; --ink:#1f2937; --muted:#6b7280; --bg:#e9edf4; }
+  :root{ --blue:#2563EB; --blue-d:#1e4fd1; --orange:#F97316; --ink:#1f2937; --muted:#6b7280;
+    --bg:#e8eef6; --floor1:#f7faff; --floor2:#e6edf8; --wood:#f0e7d8; --line:#d4ddec; }
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
     color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;line-height:1.6}
-  .wrap{max-width:1100px;margin:0 auto;padding:18px 14px 50px}
+  .wrap{max-width:1120px;margin:0 auto;padding:18px 14px 50px}
 
   header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
   .brand{display:flex;align-items:center;gap:10px}
-  .brand .logo{width:38px;height:38px;border-radius:10px;background:var(--blue);color:#fff;
-    display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
+  .brand .logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(150deg,var(--blue),#3f6fe6);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;box-shadow:0 6px 14px rgba(37,99,235,.35)}
   .brand h1{font-size:18px;font-weight:800}.brand h1 span{color:var(--muted);font-weight:700}
   .brand .tag{font-size:12px;color:var(--muted);font-weight:600}
-  .demo-badge{font-size:11px;font-weight:700;color:#fff;background:var(--orange);padding:5px 10px;border-radius:999px}
+  .demo-badge{font-size:11px;font-weight:700;color:#fff;background:var(--orange);padding:5px 10px;border-radius:999px;box-shadow:0 4px 10px rgba(249,115,22,.32)}
 
-  .catch{text-align:center;font-size:clamp(16px,3.1vw,21px);font-weight:800;line-height:1.5;margin:12px 8px 2px}
+  .catch{text-align:center;font-size:clamp(16px,3.1vw,22px);font-weight:800;line-height:1.5;margin:14px 8px 2px}
   .catch b{color:var(--blue)}
   .sub-catch{text-align:center;color:var(--muted);font-size:13px;margin-bottom:14px}
 
   /* ===== オフィス俯瞰マップ ===== */
-  .stage{width:100%;position:relative;overflow:hidden;border-radius:22px;
-    border:1px solid #cfd8e8;box-shadow:0 20px 44px rgba(37,99,235,.12)}
+  .stage{width:100%;position:relative;overflow:hidden;border-radius:26px;
+    border:1px solid #c8d4e8;box-shadow:0 26px 60px rgba(30,79,209,.16)}
   .map{width:1000px;height:640px;position:absolute;top:0;left:0;transform-origin:top left;
-    background-color:#ece6da;
-    background-image:linear-gradient(rgba(0,0,0,.035) 1px,transparent 1px),
-                     linear-gradient(90deg,rgba(0,0,0,.035) 1px,transparent 1px);
-    background-size:50px 50px}
+    background:radial-gradient(150% 100% at 50% -25%, #ffffff 0%, var(--floor1) 45%, var(--floor2) 100%)}
+  .map>*{position:absolute}
 
-  /* 直接配置する要素だけ絶対配置 */
-  .wall,.sign,.clock,.plant,.block,.room,.ceo-room,.shelf,.miniava,.pod{position:absolute}
+  /* 床ラグ（ゾーン分け） */
+  .rug{border-radius:30px}
+  .rug.work{left:30px;top:284px;width:684px;height:312px;
+    background:linear-gradient(180deg,#ecf3ff,#dde8fb);
+    box-shadow:inset 0 0 0 7px rgba(255,255,255,.7), 0 14px 30px rgba(37,99,235,.10)}
+  .rug.lounge{left:722px;top:330px;width:258px;height:268px;
+    background:linear-gradient(180deg,#f6efe1,#efe4d0);
+    box-shadow:inset 0 0 0 6px rgba(255,255,255,.6), 0 14px 30px rgba(120,90,40,.08)}
 
-  .wall{left:0;top:0;width:1000px;height:46px;background:linear-gradient(180deg,#e7edfa,#dde6f5);border-bottom:1px solid #cdd7ea}
-  .sign{left:50%;top:7px;transform:translateX(-50%);background:#fff;border:1px solid #dbe3f1;border-radius:10px;
-    padding:5px 22px;text-align:center;box-shadow:0 3px 9px rgba(0,0,0,.07)}
+  /* 上の壁＋受付サイン＋窓＋時計 */
+  .wall{left:0;top:0;width:1000px;height:54px;background:linear-gradient(180deg,#eef3fc,#dde7f6);
+    border-bottom:2px solid #cdd8ec}
+  .win{top:12px;width:120px;height:30px;border-radius:7px;
+    background:linear-gradient(180deg,#dCEafe,#bcd6fb);border:2px solid #fff;box-shadow:0 3px 7px rgba(0,0,0,.06)}
+  .sign{left:50%;top:8px;transform:translateX(-50%);background:#fff;border:1px solid #dbe3f1;border-radius:12px;
+    padding:6px 24px;text-align:center;box-shadow:0 6px 16px rgba(0,0,0,.10);z-index:6}
   .sign b{font-size:16px;font-weight:800}.sign small{display:block;font-size:9px;color:#9aa3b2;font-weight:700;letter-spacing:2px}
   a.sign{text-decoration:none;color:inherit;cursor:pointer;transition:box-shadow .15s,transform .15s}
-  a.sign:hover{box-shadow:0 6px 16px rgba(36,85,113,.18);transform:translateX(-50%) translateY(-1px)}
-  .sign-cta{display:block;margin-top:3px;font-size:9px;font-weight:800;letter-spacing:1px;color:#245571}
-  .clock{left:946px;top:9px;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid #cdd6e6}
+  a.sign:hover{box-shadow:0 10px 22px rgba(36,85,113,.20);transform:translateX(-50%) translateY(-1px)}
+  .sign-cta{display:block;margin-top:3px;font-size:9px;font-weight:800;letter-spacing:1px;color:var(--blue)}
+  .clock{left:944px;top:11px;width:30px;height:30px;border-radius:50%;background:#fff;border:3px solid #cdd6e6;box-shadow:0 2px 5px rgba(0,0,0,.08)}
   .clock i{position:absolute;left:50%;top:50%;background:#64748b;border-radius:2px;transform-origin:bottom center}
   .clock i.hh{width:2px;height:8px;transform:translate(-50%,-100%) rotate(45deg)}
   .clock i.mm{width:2px;height:11px;transform:translate(-50%,-100%) rotate(-80deg)}
 
-  .plant{font-size:30px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.12))}
+  .plant{font-size:30px;filter:drop-shadow(0 4px 4px rgba(0,0,0,.14))}
+  .decor{font-size:24px;filter:drop-shadow(0 3px 3px rgba(0,0,0,.12))}
 
-  /* 既存社員の島デスク（装飾） */
-  .block{display:grid;grid-template-columns:repeat(2,66px);gap:10px}
-  .ud{position:relative;width:66px;height:48px}
-  .ud .top{position:absolute;left:0;right:0;top:0;height:34px;background:#dee4f0;border-radius:6px;box-shadow:0 3px 6px rgba(0,0,0,.08)}
-  .ud .mon{position:absolute;top:5px;left:50%;transform:translateX(-50%);width:28px;height:13px;background:#3b4a63;border-radius:3px}
-  .ud .chair{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:26px;height:15px;background:#c4cde0;border-radius:9px 9px 11px 11px}
-  .miniava{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--blue);
-    display:flex;align-items:center;justify-content:center;font-size:11px;z-index:5}
+  /* 一般社員の島デスク（装飾・立体感あり） */
+  .desk{width:84px;height:60px}
+  .desk .top{position:absolute;left:6px;right:6px;top:0;height:38px;border-radius:8px;
+    background:linear-gradient(180deg,#ffffff,#eef2f9);border:1px solid #e0e7f2;box-shadow:0 5px 11px rgba(30,50,90,.12)}
+  .desk .scr{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:34px;height:16px;border-radius:3px;
+    background:linear-gradient(180deg,#7c8aa6,#5f6e8c);box-shadow:inset 0 0 0 2px #eef2f9}
+  .desk .chair{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:30px;height:18px;border-radius:11px 11px 13px 13px;
+    background:linear-gradient(180deg,#d3dbea,#bcc7dd);box-shadow:0 3px 6px rgba(0,0,0,.10)}
+  .pers{width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--blue);
+    display:flex;align-items:center;justify-content:center;font-size:12px;z-index:5;box-shadow:0 3px 7px rgba(0,0,0,.14)}
 
-  /* 右の部屋（装飾） */
-  .room{background:rgba(255,255,255,.45);border:1.5px dashed #c2ccdd;border-radius:10px;
-    display:flex;align-items:center;justify-content:center;color:#8a93a5;font-weight:800;font-size:14px;letter-spacing:2px}
+  /* ガラス壁の部屋（社長室・会議室・応接室） */
+  .room{border-radius:14px;background:rgba(255,255,255,.55);
+    border:2px solid rgba(255,255,255,.9);box-shadow:0 10px 24px rgba(30,60,120,.12), inset 0 0 0 1px #d7e0f0}
+  .room>*{position:absolute}
+  .rlabel{left:0;top:0;font-size:12px;font-weight:800;letter-spacing:1px;color:#fff;
+    background:linear-gradient(90deg,var(--blue),#4574e8);padding:5px 14px;border-radius:12px 0 12px 0;box-shadow:0 3px 8px rgba(37,99,235,.3)}
+  .rlabel.warm{background:linear-gradient(90deg,#e8893a,var(--orange))}
 
-  /* 下の棚（装飾） */
-  .shelf{height:30px;background:linear-gradient(180deg,#d6a574,#c79256);border-radius:6px;
-    display:flex;align-items:center;gap:14px;padding:0 14px;font-size:16px;color:#fff;box-shadow:0 6px 12px rgba(0,0,0,.12)}
+  /* 会議室：丸テーブル＋椅子 */
+  .mtable{left:50%;top:54px;transform:translateX(-50%);width:96px;height:60px;border-radius:50%;
+    background:linear-gradient(180deg,#ffffff,#eaeff7);border:1px solid #dde5f1;box-shadow:0 6px 14px rgba(0,0,0,.10)}
+  .mchair{width:18px;height:18px;border-radius:6px;background:linear-gradient(180deg,#d3dbea,#bcc7dd);box-shadow:0 2px 5px rgba(0,0,0,.10)}
 
-  /* 社長室（指示を出す） */
-  .ceo-room{background:rgba(37,99,235,.06);border:1.5px solid #b9c8ee;border-radius:12px}
-  .ceo-room>*{position:absolute}
-  .rm-label{left:16px;top:13px;font-size:14px;font-weight:800;color:var(--blue)}
-  .bava{left:220px;top:11px;width:44px;height:44px;border-radius:50%;background:#fff;border:3px solid var(--orange);
-    display:flex;align-items:center;justify-content:center;font-size:23px;box-shadow:0 3px 8px rgba(0,0,0,.12)}
-  .btag{left:214px;top:57px;font-size:10px;font-weight:800;color:#92400e;background:#fff;border:1px solid #fcd9b6;
-    border-radius:999px;padding:2px 9px}
-  .cmd-head{left:16px;top:60px;font-size:12px;font-weight:700;color:#475569}
-  .cmd{left:16px;width:258px;height:40px;display:flex;align-items:center;gap:9px;padding-left:14px;text-decoration:none;
-    background:#fff;border:1px solid #d8e0f0;border-radius:10px;font-size:13.5px;font-weight:700;color:var(--ink);
-    box-shadow:0 2px 6px rgba(0,0,0,.05);transition:border-color .12s,background .12s}
-  .cmd:hover{border-color:var(--blue);background:#f5f8ff}
+  /* 応接室：ソファ＋ローテーブル */
+  .sofa{width:150px;height:34px;border-radius:14px 14px 10px 10px;
+    background:linear-gradient(180deg,#cdd8ee,#aebbdb);box-shadow:0 6px 13px rgba(0,0,0,.12)}
+  .sofa.s2{width:34px;height:96px;border-radius:14px 10px 10px 14px}
+  .ctable{width:60px;height:34px;border-radius:11px;background:linear-gradient(180deg,#fff,#eef2f9);
+    border:1px solid #e0e7f2;box-shadow:0 5px 11px rgba(0,0,0,.10)}
+
+  /* 社長室の中身 */
+  .cava{left:18px;top:36px;width:46px;height:46px;border-radius:50%;background:#fff;border:3px solid var(--orange);
+    display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 5px 12px rgba(0,0,0,.16);z-index:3}
+  .cdesk{left:14px;top:74px;width:96px;height:24px;border-radius:7px;background:linear-gradient(180deg,#fff,#eef2f9);
+    border:1px solid #e0e7f2;box-shadow:0 5px 11px rgba(0,0,0,.10)}
+  .ctag{left:74px;top:40px;font-size:10px;font-weight:800;color:#92400e;background:#fff;border:1px solid #fcd9b6;
+    border-radius:999px;padding:2px 9px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+  .cmd-head{left:130px;top:40px;font-size:11px;font-weight:700;color:#475569;width:118px}
+  .cmd{width:226px;height:38px;left:16px;display:flex;align-items:center;gap:8px;padding-left:13px;text-decoration:none;
+    background:#fff;border:1px solid #dce4f2;border-radius:10px;font-size:13px;font-weight:700;color:var(--ink);
+    box-shadow:0 3px 8px rgba(30,50,90,.07);transition:border-color .12s,background .12s,transform .12s}
+  .cmd:hover{border-color:var(--blue);background:#f4f8ff;transform:translateY(-1px)}
   .cmd .ar{margin-left:auto;margin-right:12px;color:var(--blue);font-weight:800}
 
-  /* ★ 3つのAI社員ポッド（クリック本体） */
-  .pod{width:164px;height:250px;text-decoration:none;text-align:center;cursor:pointer}
+  /* ★ AI社員ワークステーション（クリック本体） */
+  .pod{width:160px;height:252px;text-decoration:none;text-align:center;cursor:pointer}
   .pod>*{position:absolute}
-  .pod .rug{left:50%;top:34px;transform:translateX(-50%);width:152px;height:150px;border-radius:50%;
-    background:radial-gradient(closest-side,#f4e7d2,rgba(244,231,210,0));transition:background .15s}
-  .pod .label{left:50%;top:0;transform:translateX(-50%);background:var(--blue);color:#fff;font-weight:800;font-size:13px;
-    padding:5px 15px;border-radius:999px;white-space:nowrap;z-index:4;box-shadow:0 4px 10px rgba(37,99,235,.35)}
-  .pod .table{left:50%;top:78px;transform:translateX(-50%);width:96px;height:96px;border-radius:50%;background:#e7ebf3;
-    border:3px solid #fff;box-shadow:0 6px 14px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-size:30px}
-  .pod .ava{left:50%;top:60px;transform:translateX(-50%);width:50px;height:50px;border-radius:50%;background:#fff;
-    border:3px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:25px;z-index:3;box-shadow:0 4px 10px rgba(0,0,0,.15)}
-  .pod .cta{left:50%;top:190px;transform:translateX(-50%);background:var(--orange);color:#fff;font-weight:800;font-size:14px;
-    padding:11px 20px;border-radius:12px;white-space:nowrap;z-index:4;box-shadow:0 6px 14px rgba(249,115,22,.4);transition:transform .12s}
-  .pod .task{left:50%;top:234px;transform:translateX(-50%);width:158px;font-size:11px;color:#7a8499;font-weight:600}
-  .pod:hover .rug{background:radial-gradient(closest-side,#ffe7bf,rgba(255,231,191,0))}
-  .pod:hover .cta{transform:translateX(-50%) translateY(-2px)}
+  .pod .zone{left:50%;top:42px;transform:translateX(-50%);width:150px;height:140px;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(37,99,235,.16),rgba(37,99,235,0));transition:background .16s}
+  .pod .label{left:50%;top:0;transform:translateX(-50%);background:linear-gradient(180deg,#2f6bf0,var(--blue));color:#fff;font-weight:800;font-size:12.5px;
+    padding:5px 14px;border-radius:999px;white-space:nowrap;z-index:5;box-shadow:0 5px 12px rgba(37,99,235,.4)}
+  .pod .ava{left:50%;top:62px;transform:translateX(-50%);width:54px;height:54px;border-radius:50%;background:#fff;
+    border:3px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:27px;z-index:4;box-shadow:0 6px 14px rgba(0,0,0,.16)}
+  .pod .desk{left:50%;top:120px;transform:translateX(-50%);width:120px;height:46px;border-radius:11px;z-index:3;
+    background:linear-gradient(180deg,#ffffff,#eaf0fa);border:1px solid #dde6f3;box-shadow:0 8px 18px rgba(30,60,120,.16)}
+  .pod .scr{left:50%;top:128px;transform:translateX(-50%);width:46px;height:26px;border-radius:5px;z-index:4;
+    background:linear-gradient(180deg,#3f6fe6,#2557d6);box-shadow:inset 0 0 0 3px #fff, 0 3px 7px rgba(0,0,0,.18)}
+  .pod .cta{left:50%;top:188px;transform:translateX(-50%);background:linear-gradient(180deg,#fb8a3c,var(--orange));color:#fff;font-weight:800;font-size:13.5px;
+    padding:10px 18px;border-radius:12px;white-space:nowrap;z-index:5;box-shadow:0 7px 16px rgba(249,115,22,.42);transition:transform .12s,box-shadow .12s}
+  .pod .task{left:50%;top:232px;transform:translateX(-50%);width:160px;font-size:11px;color:#64748b;font-weight:600}
+  .pod:hover .zone{background:radial-gradient(closest-side,rgba(249,115,22,.22),rgba(249,115,22,0))}
+  .pod:hover .ava{border-color:var(--orange)}
+  .pod:hover .cta{transform:translateX(-50%) translateY(-2px);box-shadow:0 11px 22px rgba(249,115,22,.5)}
 
   footer{text-align:center;color:var(--muted);font-size:12px;margin-top:18px;line-height:1.7}
   footer b{color:var(--ink)}
@@ -119,72 +145,87 @@
   <div class="stage" id="stage">
     <div class="map" id="map">
 
-      <!-- 壁・看板・時計 -->
+      <!-- 床ラグ -->
+      <div class="rug work"></div>
+      <div class="rug lounge"></div>
+
+      <!-- 上の壁・窓・受付サイン・時計 -->
       <div class="wall"></div>
+      <div class="win" style="left:120px"></div>
+      <div class="win" style="left:760px"></div>
       <a class="sign" data-key="hp" target="_blank" rel="noopener"><b>マルワ製作所</b><small>東大阪 ｜ 精密切削加工</small><span class="sign-cta">🌐 会社サイトを見る ▶</span></a>
       <div class="clock"><i class="hh"></i><i class="mm"></i></div>
 
-      <!-- 観葉植物 -->
-      <div class="plant" style="left:14px;top:82px">🪴</div>
-      <div class="plant" style="left:14px;top:300px">🌿</div>
-      <div class="plant" style="left:14px;top:520px">🪴</div>
+      <!-- 観葉植物・小物 -->
+      <div class="plant" style="left:16px;top:78px">🪴</div>
+      <div class="plant" style="left:16px;top:300px">🌿</div>
+      <div class="plant" style="left:16px;top:520px">🪴</div>
+      <div class="decor" style="left:636px;top:96px">🖨️</div>
+      <div class="decor" style="left:632px;top:210px">🚰</div>
 
-      <!-- 既存社員の島デスク（装飾） -->
-      <div class="block" style="left:96px;top:72px">
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-      </div>
-      <div class="block" style="left:330px;top:72px">
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-        <div class="ud"><div class="top"><div class="mon"></div></div><div class="chair"></div></div>
-      </div>
-      <div class="miniava" style="left:96px;top:96px">🧑</div>
-      <div class="miniava" style="left:216px;top:150px">👩</div>
-      <div class="miniava" style="left:424px;top:96px">🧑</div>
+      <!-- 一般社員の島デスク（装飾） -->
+      <div class="desk" style="left:96px;top:84px"><div class="top"><div class="scr"></div></div><div class="chair"></div></div>
+      <div class="desk" style="left:200px;top:84px"><div class="top"><div class="scr"></div></div><div class="chair"></div></div>
+      <div class="desk" style="left:96px;top:170px"><div class="top"><div class="scr"></div></div><div class="chair"></div></div>
+      <div class="desk" style="left:200px;top:170px"><div class="top"><div class="scr"></div></div><div class="chair"></div></div>
+      <div class="desk" style="left:360px;top:84px"><div class="top"><div class="scr"></div></div><div class="chair"></div></div>
+      <div class="desk" style="left:464px;top:84px"><div class="top"><div class="scr"></div></div><div class="chair"></div></div>
+      <div class="desk" style="left:360px;top:170px"><div class="top"><div class="scr"></div></div><div class="chair"></div></div>
+      <div class="desk" style="left:464px;top:170px"><div class="top"><div class="scr"></div></div><div class="chair"></div></div>
+      <div class="pers" style="left:128px;top:104px">🧑</div>
+      <div class="pers" style="left:232px;top:190px">👩</div>
+      <div class="pers" style="left:496px;top:104px">🧑</div>
 
-      <!-- 社長室（指示を出す） -->
-      <div class="ceo-room" style="left:690px;top:56px;width:290px;height:266px">
-        <div class="rm-label">社長室</div>
-        <div class="bava">🧑‍💼</div>
-        <div class="btag">社長</div>
+      <!-- 社長室 -->
+      <div class="room" style="left:722px;top:56px;width:258px;height:252px">
+        <div class="rlabel">社長室</div>
+        <div class="cava">🧑‍💼</div>
+        <div class="ctag">社長</div>
+        <div class="cdesk"></div>
         <div class="cmd-head">AI社員に指示を出す</div>
-        <a class="cmd" style="top:84px" data-key="fax">📥 受注を入力する <span class="ar">▶</span></a>
-        <a class="cmd" style="top:128px" data-key="quote">📄 見積もりを作る <span class="ar">▶</span></a>
-        <a class="cmd" style="top:172px" data-key="mail">✉️ メールを作る <span class="ar">▶</span></a>
-        <a class="cmd" style="top:216px" data-key="catalog">📘 カタログを作る <span class="ar">▶</span></a>
+        <a class="cmd" style="top:104px" data-key="fax">📥 受注を入力する <span class="ar">▶</span></a>
+        <a class="cmd" style="top:148px" data-key="quote">📄 見積もりを作る <span class="ar">▶</span></a>
+        <a class="cmd" style="top:192px" data-key="mail">✉️ メールを作る <span class="ar">▶</span></a>
+        <a class="cmd" style="top:236px" data-key="catalog">📘 カタログを作る <span class="ar">▶</span></a>
       </div>
 
-      <!-- 右下：部屋（装飾） -->
-      <div class="room" style="left:742px;top:326px;width:238px;height:98px">会議室</div>
-      <div class="room" style="left:742px;top:436px;width:238px;height:98px">応接室</div>
+      <!-- 会議室 -->
+      <div class="room" style="left:722px;top:330px;width:258px;height:128px">
+        <div class="rlabel">会議室</div>
+        <div class="mtable"></div>
+        <div class="mchair" style="left:50%;top:40px;transform:translateX(-50%)"></div>
+        <div class="mchair" style="left:50%;top:108px;transform:translateX(-50%)"></div>
+        <div class="mchair" style="left:84px;top:74px"></div>
+        <div class="mchair" style="left:156px;top:74px"></div>
+      </div>
 
-      <!-- ★ 4つのAI社員ポッド（クリック本体） -->
-      <a class="pod" style="left:28px;top:330px" data-key="fax" target="_blank" rel="noopener">
-        <span class="rug"></span><span class="label">FAX受注AI社員</span>
-        <span class="table">📊</span><span class="ava">🧑‍💼</span>
+      <!-- 応接室 -->
+      <div class="room" style="left:722px;top:478px;width:258px;height:120px">
+        <div class="rlabel warm">応接室</div>
+        <div class="sofa" style="left:54px;top:34px"></div>
+        <div class="ctable" style="left:99px;top:74px"></div>
+        <div class="plant" style="left:214px;top:64px;font-size:24px">🪴</div>
+      </div>
+
+      <!-- ★ AI社員ワークステーション（クリック本体） -->
+      <a class="pod" style="left:44px;top:306px" data-key="fax" target="_blank" rel="noopener">
+        <span class="zone"></span><span class="label">FAX受注AI社員</span>
+        <span class="ava">🧑‍💼</span><span class="desk"></span><span class="scr">📊</span>
         <span class="cta">使ってみる →</span><span class="task">FAX・発注書を自動入力</span>
       </a>
-      <a class="pod" style="left:196px;top:330px" data-key="quote" target="_blank" rel="noopener">
-        <span class="rug"></span><span class="label">見積作成AI社員</span>
-        <span class="table">📄</span><span class="ava">🧑‍💼</span>
+      <a class="pod" style="left:210px;top:306px" data-key="quote" target="_blank" rel="noopener">
+        <span class="zone"></span><span class="label">見積作成AI社員</span>
+        <span class="ava">🧑‍💼</span><span class="desk"></span><span class="scr">📄</span>
         <span class="cta">使ってみる →</span><span class="task">見積書を自動作成</span>
       </a>
-      <a class="pod" style="left:364px;top:330px" data-key="mail" target="_blank" rel="noopener">
-        <span class="rug"></span><span class="label">メール作成AI社員</span>
-        <span class="table">✉️</span><span class="ava">🧑‍💼</span>
+      <a class="pod" style="left:376px;top:306px" data-key="mail" target="_blank" rel="noopener">
+        <span class="zone"></span><span class="label">メール作成AI社員</span>
+        <span class="ava">🧑‍💼</span><span class="desk"></span><span class="scr">✉️</span>
         <span class="cta">使ってみる →</span><span class="task">取引先メールを自動作成</span>
       </a>
-      <a class="pod" style="left:532px;top:330px" data-key="catalog" target="_blank" rel="noopener">
-        <span class="rug"></span><span class="label">カタログ作成AI社員</span>
-        <span class="table">📘</span><span class="ava">🧑‍💼</span>
+      <a class="pod" style="left:542px;top:306px" data-key="catalog" target="_blank" rel="noopener">
+        <span class="zone"></span><span class="label">カタログ作成AI社員</span>
+        <span class="ava">🧑‍💼</span><span class="desk"></span><span class="scr">📘</span>
         <span class="cta">使ってみる →</span><span class="task">商品カタログを自動作成</span>
       </a>
 
@@ -192,7 +233,7 @@
   </div>
 
   <footer>
-    これは<b>デモ用の架空の会社</b>です。会社名・取扱品・業務を入れ替えれば、<b>御社のAIオフィス</b>になります。<br>
+    これは<b>デモ用の架空の会社</b>です。<br>
     提供：株式会社Lib
   </footer>
 
